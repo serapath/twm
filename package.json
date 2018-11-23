@@ -1,0 +1,28 @@
+{
+  "name": "twm",
+  "version": "0.0.0",
+  "description": "tiling window manager",
+  "main": "src/twm.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/serapath/twm.git"
+  },
+  "keywords": [
+    "tiler",
+    "tiling",
+    "window",
+    "manager",
+    "panel",
+    "pane",
+    "tab"
+  ],
+  "author": "@serapath",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/serapath/twm/issues"
+  },
+  "homepage": "https://github.com/serapath/twm#readme"
+}
