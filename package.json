@@ -1,11 +1,11 @@
 {
   "name": "twm",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "tiling window manager",
   "main": "src/twm.js",
   "scripts": {
-    "start": "budo demo.js:bundle.js --open --live --ssl",
-    "build": "browserify demo.js > bundle.js",
+    "start": "budo demo/demo.js:bundle.js --title $npm_package_name --force-default-index --open --live --ssl",
+    "build": "browserify --full-paths demo/demo.js > bundle.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -21,7 +21,6 @@
     "pane",
     "tab"
   ],
-  "author": "@serapath",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/serapath/twm/issues"
@@ -32,6 +31,7 @@
   },
   "dependencies": {
     "bel": "^6.0.0",
-    "csjs-inject": "^1.0.1"
+    "csjs-inject": "^1.0.1",
+    "on-load": "^4.0.1"
   }
 }
