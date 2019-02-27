@@ -174,8 +174,8 @@ function adjustSizes (target, css, from) {
       el.style = `
         border: ${border}px dashed ${color};
         margin: ${margin}px;
-        // min-width: ${width - (2 * margin)}px;
-        // max-width: ${width - (2 * margin)}px;
+        min-width: ${width - (2 * margin)}px;
+        max-width: ${width - (2 * margin)}px;
       `
     })
   }

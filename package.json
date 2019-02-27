@@ -1,6 +1,6 @@
 {
   "name": "twm",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "tiling window manager",
   "main": "src/twm.js",
   "scripts": {

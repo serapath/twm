@@ -1,60 +1,72 @@
-(function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
+(function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/demo/demo.js":[function(require,module,exports){
 const bel = require('bel')
 const csjs = require('csjs-inject')
-document.head.innerHTML = `
-  <style>
-    html, body {
-      display: flex;
-      flex-direction: column;
-      margin: 0;
-      height: 100vh;
-      width: 100vw;
-    }
-  </style>`
 
-const twm = require('./')
+const twm = require('../')
+
+function addBox (el) {
+  var box = makeBox()
+  document.body.appendChild(box)
+  box.appendChild(el)
+}
 function makeBox (color = `hsla(${360*Math.random()},100%,50%,1)`) {
   var box = document.createElement('div')
-  box.style = `box-sizing: border-box; padding: 10px; border: 3px dashed ${color};`
+  box.className = css.box
+  box.style = `border: 3px dashed ${color};`
   return box
 }
-var boxes = [...Array(4)].map(makeBox)
-boxes.forEach(el => document.body.appendChild(el))
 
-const theme1 = {}
-const theme2 = {}
+function makeStuff () {
+  const ed = { el: bel`<p>EDITOR</b>`, name: 'editor' }
+  const out = { el: bel`<p>OUTPUT</b>`, name: 'output' }
+  const sc = { el: bel`<div>xxx</div>`, name: 'preview' }
+  const mb = { el: bel`<p>MENUBAR</b>`, name: 'navbar' }
+  return [ed, out, sc, mb]
+}
 
-// ;[
-//   twm`
-//
-//   `,
-//   twm`
-//
-//   `,
-//   twm(theme1)`
-//
-//   `,
-//   twm(theme2)`
-//
-//   `,
-// ].forEach((el, i) => document.body.appendChild(el))
+setTimeout(async () => {
+  const [ed1, out1, sc1, mb1] = makeStuff()
+  const [ed2, out2, sc2, mb2] = makeStuff()
+  const [ed3, out3, sc3, mb3] = makeStuff()
+  const [ed4, out4, sc4, mb4] = makeStuff()
+  ;[
+    twm`
+      [[${ed1}]] ${out1} | ${sc1}
+      ${mb1}
+    `,
+    twm`
+      [[${ed2}]] ${out2} | ${sc2}
+      ${mb2}
+    `,
+    twm({ theme: {} })`
+      [[${ed3}]] ${out3} | ${sc3}
+      ${mb3}
+    `,
+    twm({ theme: {} })`
+      [[${ed4}]] ${out4} | ${sc4}
+      ${mb4}
+    `,
+  ].forEach(addBox)
 
+  // const mosaic = twm(theme)`
+  //   [[${ed}]] ${out} | ${sc}
+  //   ${mb}`
+  // const [,[,[,editor, output],[,scapp]],[,navbar]] = Array.from(mosaic)
+
+}, 0)
+
+document.head.innerHTML = `<style>
+  html, body { height: 100vh; width: 100vw; }
+</style>`
 document.body.innerHTML = `<h1> under construction </h1>`
+const css = csjs`.box {
+  display: inline-block;
+  box-sizing: border-box;
+  margin: 10px; padding: 10px;
+  height: 40%; width: 45%;
+}`
 
-const css = csjs`.container { border: 5px dotted red; }`
-const theme = {}
-const ed = { el: bel`<p>EDITOR</b>`, name: 'editor' }
-const out = { el: bel`<p>OUTPUT</b>`, name: 'output' }
-const sc = { el: bel`<div></div>`, name: 'preview' }
-const mb = { el: bel`<p>MENUBAR</b>`, name: 'navbar' }
-const mosaic = twm(theme)`
-  [[${ed}]] ${out} | ${sc}
-  ${mb}`
-const [,[,[,editor, output],[,scapp]],[,navbar]] = Array.from(mosaic)
-var el = bel`<div class=${css.container}>${mosaic}</div>`
-document.body.appendChild(el)
-
-},{"./":26,"bel":3,"csjs-inject":6}],2:[function(require,module,exports){
+},{"../":"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/src/twm.js","bel":"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/node_modules/bel/browser.js","csjs-inject":"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/node_modules/csjs-inject/index.js"}],"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/node_modules/bel/appendChild.js":[function(require,module,exports){
 var trailingNewlineRegex = /\n[\s]+$/
 var leadingNewlineRegex = /^\n[\s]+/
 var trailingSpaceRegex = /[\s]+$/
@@ -187,7 +199,7 @@ module.exports = function appendChild (el, childs) {
   }
 }
 
-},{}],3:[function(require,module,exports){
+},{}],"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/node_modules/bel/browser.js":[function(require,module,exports){
 var hyperx = require('hyperx')
 var appendChild = require('./appendChild')
 
@@ -288,7 +300,9 @@ module.exports = hyperx(belCreateElement, {comments: true})
 module.exports.default = module.exports
 module.exports.createElement = belCreateElement
 
-},{"./appendChild":2,"hyperx":24}],4:[function(require,module,exports){
+},{"./appendChild":"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/node_modules/bel/appendChild.js","hyperx":"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/node_modules/hyperx/index.js"}],"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/node_modules/browser-resolve/empty.js":[function(require,module,exports){
+
+},{}],"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/node_modules/csjs-inject/csjs.js":[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -307,12 +321,12 @@ function csjsInserter() {
 module.exports = csjsInserter;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"csjs":9,"insert-css":25}],5:[function(require,module,exports){
+},{"csjs":"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/node_modules/csjs/index.js","insert-css":"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/node_modules/insert-css/index.js"}],"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/node_modules/csjs-inject/get-css.js":[function(require,module,exports){
 'use strict';
 
 module.exports = require('csjs/get-css');
 
-},{"csjs/get-css":8}],6:[function(require,module,exports){
+},{"csjs/get-css":"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/node_modules/csjs/get-css.js"}],"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/node_modules/csjs-inject/index.js":[function(require,module,exports){
 'use strict';
 
 var csjs = require('./csjs');
@@ -321,17 +335,17 @@ module.exports = csjs;
 module.exports.csjs = csjs;
 module.exports.getCss = require('./get-css');
 
-},{"./csjs":4,"./get-css":5}],7:[function(require,module,exports){
+},{"./csjs":"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/node_modules/csjs-inject/csjs.js","./get-css":"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/node_modules/csjs-inject/get-css.js"}],"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/node_modules/csjs/csjs.js":[function(require,module,exports){
 'use strict';
 
 module.exports = require('./lib/csjs');
 
-},{"./lib/csjs":13}],8:[function(require,module,exports){
+},{"./lib/csjs":"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/node_modules/csjs/lib/csjs.js"}],"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/node_modules/csjs/get-css.js":[function(require,module,exports){
 'use strict';
 
 module.exports = require('./lib/get-css');
 
-},{"./lib/get-css":17}],9:[function(require,module,exports){
+},{"./lib/get-css":"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/node_modules/csjs/lib/get-css.js"}],"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/node_modules/csjs/index.js":[function(require,module,exports){
 'use strict';
 
 var csjs = require('./csjs');
@@ -341,7 +355,7 @@ module.exports.csjs = csjs;
 module.exports.noScope = csjs({ noscope: true });
 module.exports.getCss = require('./get-css');
 
-},{"./csjs":7,"./get-css":8}],10:[function(require,module,exports){
+},{"./csjs":"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/node_modules/csjs/csjs.js","./get-css":"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/node_modules/csjs/get-css.js"}],"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/node_modules/csjs/lib/base62-encode.js":[function(require,module,exports){
 'use strict';
 
 /**
@@ -363,7 +377,7 @@ module.exports = function encode(integer) {
   return str;
 };
 
-},{}],11:[function(require,module,exports){
+},{}],"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/node_modules/csjs/lib/build-exports.js":[function(require,module,exports){
 'use strict';
 
 var makeComposition = require('./composition').makeComposition;
@@ -407,7 +421,7 @@ function getClassChain(obj) {
   return acc;
 }
 
-},{"./composition":12}],12:[function(require,module,exports){
+},{"./composition":"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/node_modules/csjs/lib/composition.js"}],"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/node_modules/csjs/lib/composition.js":[function(require,module,exports){
 'use strict';
 
 module.exports = {
@@ -487,7 +501,7 @@ function ignoreComposition(values) {
  */
 function Composition() {}
 
-},{}],13:[function(require,module,exports){
+},{}],"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/node_modules/csjs/lib/csjs.js":[function(require,module,exports){
 'use strict';
 
 var extractExtends = require('./css-extract-extends');
@@ -565,7 +579,7 @@ function without(obj, unwanted) {
   }, {});
 }
 
-},{"./build-exports":11,"./composition":12,"./css-extract-extends":14,"./css-key":15,"./extract-exports":16,"./scopeify":22}],14:[function(require,module,exports){
+},{"./build-exports":"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/node_modules/csjs/lib/build-exports.js","./composition":"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/node_modules/csjs/lib/composition.js","./css-extract-extends":"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/node_modules/csjs/lib/css-extract-extends.js","./css-key":"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/node_modules/csjs/lib/css-key.js","./extract-exports":"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/node_modules/csjs/lib/extract-exports.js","./scopeify":"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/node_modules/csjs/lib/scopeify.js"}],"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/node_modules/csjs/lib/css-extract-extends.js":[function(require,module,exports){
 'use strict';
 
 var makeComposition = require('./composition').makeComposition;
@@ -618,7 +632,7 @@ function getClassName(str) {
   return trimmed[0] === '.' ? trimmed.substr(1) : trimmed;
 }
 
-},{"./composition":12}],15:[function(require,module,exports){
+},{"./composition":"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/node_modules/csjs/lib/composition.js"}],"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/node_modules/csjs/lib/css-key.js":[function(require,module,exports){
 'use strict';
 
 /**
@@ -628,7 +642,7 @@ function getClassName(str) {
 
 module.exports = ' css ';
 
-},{}],16:[function(require,module,exports){
+},{}],"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/node_modules/csjs/lib/extract-exports.js":[function(require,module,exports){
 'use strict';
 
 var regex = require('./regex');
@@ -655,7 +669,7 @@ function getExport(css, regex) {
   return prop;
 }
 
-},{"./regex":19}],17:[function(require,module,exports){
+},{"./regex":"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/node_modules/csjs/lib/regex.js"}],"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/node_modules/csjs/lib/get-css.js":[function(require,module,exports){
 'use strict';
 
 var cssKey = require('./css-key');
@@ -664,7 +678,7 @@ module.exports = function getCss(csjs) {
   return csjs[cssKey];
 };
 
-},{"./css-key":15}],18:[function(require,module,exports){
+},{"./css-key":"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/node_modules/csjs/lib/css-key.js"}],"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/node_modules/csjs/lib/hash-string.js":[function(require,module,exports){
 'use strict';
 
 /**
@@ -682,7 +696,7 @@ module.exports = function hashStr(str) {
   return hash >>> 0;
 };
 
-},{}],19:[function(require,module,exports){
+},{}],"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/node_modules/csjs/lib/regex.js":[function(require,module,exports){
 'use strict';
 
 var findClasses = /(\.)(?!\d)([^\s\.,{\[>+~#:)]*)(?![^{]*})/.source;
@@ -698,7 +712,7 @@ module.exports = {
   ignoreComments: ignoreComments,
 };
 
-},{}],20:[function(require,module,exports){
+},{}],"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/node_modules/csjs/lib/replace-animations.js":[function(require,module,exports){
 var ignoreComments = require('./regex').ignoreComments;
 
 module.exports = replaceAnimations;
@@ -729,7 +743,7 @@ function replaceAnimations(result) {
   return result;
 }
 
-},{"./regex":19}],21:[function(require,module,exports){
+},{"./regex":"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/node_modules/csjs/lib/regex.js"}],"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/node_modules/csjs/lib/scoped-name.js":[function(require,module,exports){
 'use strict';
 
 var encode = require('./base62-encode');
@@ -743,7 +757,7 @@ module.exports = function fileScoper(fileSrc) {
   }
 };
 
-},{"./base62-encode":10,"./hash-string":18}],22:[function(require,module,exports){
+},{"./base62-encode":"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/node_modules/csjs/lib/base62-encode.js","./hash-string":"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/node_modules/csjs/lib/hash-string.js"}],"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/node_modules/csjs/lib/scopeify.js":[function(require,module,exports){
 'use strict';
 
 var fileScoper = require('./scoped-name');
@@ -784,7 +798,45 @@ function scopify(css, ignores) {
   return replaceAnimations(result);
 }
 
-},{"./regex":19,"./replace-animations":20,"./scoped-name":21}],23:[function(require,module,exports){
+},{"./regex":"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/node_modules/csjs/lib/regex.js","./replace-animations":"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/node_modules/csjs/lib/replace-animations.js","./scoped-name":"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/node_modules/csjs/lib/scoped-name.js"}],"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/node_modules/global/document.js":[function(require,module,exports){
+(function (global){
+var topLevel = typeof global !== 'undefined' ? global :
+    typeof window !== 'undefined' ? window : {}
+var minDoc = require('min-document');
+
+var doccy;
+
+if (typeof document !== 'undefined') {
+    doccy = document;
+} else {
+    doccy = topLevel['__GLOBAL_DOCUMENT_CACHE@4'];
+
+    if (!doccy) {
+        doccy = topLevel['__GLOBAL_DOCUMENT_CACHE@4'] = minDoc;
+    }
+}
+
+module.exports = doccy;
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"min-document":"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/node_modules/browser-resolve/empty.js"}],"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/node_modules/global/window.js":[function(require,module,exports){
+(function (global){
+var win;
+
+if (typeof window !== "undefined") {
+    win = window;
+} else if (typeof global !== "undefined") {
+    win = global;
+} else if (typeof self !== "undefined"){
+    win = self;
+} else {
+    win = {};
+}
+
+module.exports = win;
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{}],"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/node_modules/hyperscript-attribute-to-property/index.js":[function(require,module,exports){
 module.exports = attributeToProperty
 
 var transform = {
@@ -805,7 +857,7 @@ function attributeToProperty (h) {
   }
 }
 
-},{}],24:[function(require,module,exports){
+},{}],"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/node_modules/hyperx/index.js":[function(require,module,exports){
 var attrToProp = require('hyperscript-attribute-to-property')
 
 var VAR = 0, TEXT = 1, OPEN = 2, CLOSE = 3, ATTR = 4
@@ -1101,7 +1153,7 @@ var closeRE = RegExp('^(' + [
 ].join('|') + ')(?:[\.#][a-zA-Z0-9\u007F-\uFFFF_:-]+)*$')
 function selfClosing (tag) { return closeRE.test(tag) }
 
-},{"hyperscript-attribute-to-property":23}],25:[function(require,module,exports){
+},{"hyperscript-attribute-to-property":"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/node_modules/hyperscript-attribute-to-property/index.js"}],"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/node_modules/insert-css/index.js":[function(require,module,exports){
 var inserted = {};
 
 module.exports = function (css, options) {
@@ -1125,14 +1177,111 @@ module.exports = function (css, options) {
     }
 };
 
-},{}],26:[function(require,module,exports){
+},{}],"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/node_modules/on-load/index.js":[function(require,module,exports){
+/* global MutationObserver */
+var document = require('global/document')
+var window = require('global/window')
+var watch = Object.create(null)
+var KEY_ID = 'onloadid' + (new Date() % 9e6).toString(36)
+var KEY_ATTR = 'data-' + KEY_ID
+var INDEX = 0
+
+if (window && window.MutationObserver) {
+  var observer = new MutationObserver(function (mutations) {
+    if (Object.keys(watch).length < 1) return
+    for (var i = 0; i < mutations.length; i++) {
+      if (mutations[i].attributeName === KEY_ATTR) {
+        eachAttr(mutations[i], turnon, turnoff)
+        continue
+      }
+      eachMutation(mutations[i].removedNodes, function (index, el) {
+        if (!document.documentElement.contains(el)) turnoff(index, el)
+      })
+      eachMutation(mutations[i].addedNodes, function (index, el) {
+        if (document.documentElement.contains(el)) turnon(index, el)
+      })
+    }
+  })
+
+  observer.observe(document.documentElement, {
+    childList: true,
+    subtree: true,
+    attributes: true,
+    attributeOldValue: true,
+    attributeFilter: [KEY_ATTR]
+  })
+}
+
+module.exports = function onload (el, on, off, caller) {
+  on = on || function () {}
+  off = off || function () {}
+  el.setAttribute(KEY_ATTR, 'o' + INDEX)
+  watch['o' + INDEX] = [on, off, 0, caller || onload.caller]
+  INDEX += 1
+  return el
+}
+
+module.exports.KEY_ATTR = KEY_ATTR
+module.exports.KEY_ID = KEY_ID
+
+function turnon (index, el) {
+  if (watch[index][0] && watch[index][2] === 0) {
+    watch[index][0](el)
+    watch[index][2] = 1
+  }
+}
+
+function turnoff (index, el) {
+  if (watch[index][1] && watch[index][2] === 1) {
+    watch[index][1](el)
+    watch[index][2] = 0
+  }
+}
+
+function eachAttr (mutation, on, off) {
+  var newValue = mutation.target.getAttribute(KEY_ATTR)
+  if (sameOrigin(mutation.oldValue, newValue)) {
+    watch[newValue] = watch[mutation.oldValue]
+    return
+  }
+  if (watch[mutation.oldValue]) {
+    off(mutation.oldValue, mutation.target)
+  }
+  if (watch[newValue]) {
+    on(newValue, mutation.target)
+  }
+}
+
+function sameOrigin (oldValue, newValue) {
+  if (!oldValue || !newValue) return false
+  return watch[oldValue][3] === watch[newValue][3]
+}
+
+function eachMutation (nodes, fn) {
+  var keys = Object.keys(watch)
+  for (var i = 0; i < nodes.length; i++) {
+    if (nodes[i] && nodes[i].getAttribute && nodes[i].getAttribute(KEY_ATTR)) {
+      var onloadid = nodes[i].getAttribute(KEY_ATTR)
+      keys.forEach(function (k) {
+        if (onloadid === k) {
+          fn(k, nodes[i])
+        }
+      })
+    }
+    if (nodes[i] && nodes[i].childNodes.length > 0) {
+      eachMutation(nodes[i].childNodes, fn)
+    }
+  }
+}
+
+},{"global/document":"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/node_modules/global/document.js","global/window":"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/node_modules/global/window.js"}],"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/src/twm.js":[function(require,module,exports){
 const bel = require('bel')
 const csjs = require('csjs-inject')
-
+const onload = require('on-load')
 /*
   e.g. var el = twm`` // has at least a (hidden) way to open a terminal
   @TODO: global terminal to issue commands to freeze/unfreeze tab content
-         e.g. buttonless not closable menubar is not removable otherwse
+         e.g. buttonless not closable tabsbar is not removable otherwise
 */
 module.exports = twm
 
@@ -1145,68 +1294,231 @@ function _twm (theme, strings, args) {
   var el = template(mosaic, theme)
   el.length = mosaic.length
   mosaic.reduce((el, val, key) => (el[key] = val, el), el)
+  el.api = ({ cmd, target }) => {
+    console.log('cmd', cmd, 'target', target)
+  }
+  const listeners = { resize: [] }
+  el.on = (name, done) => {
+    if (name === 'resize') listeners.resize.push(done)
+  }
   return el
 }
+// function onresize (target, callback) {
+//   function makeid (el) {
+//     return [target.style.width, target.style.height, target.clientWidth, target.clientHeight].join('')
+//   }
+//   var last = makeid(target)
+//   var observer = new MutationObserver(mutations => {
+//     for (var i = 0; i < mutations.length; i++) {
+//       var m = mutations[i]
+//       if (m.type !== 'attributes' || m.attributeName === 'style' || m.attributeName === 'class') {
+//         var now = makeid(target)
+//         if (now !== last) {
+//           last = now
+//           callback({
+//             width: target.clientWidth,
+//             height: target.clientHeight,
+//             w: target.offsetWidth,
+//             h: target.offsetHeight,
+//           })
+//           break
+//         }
+//       }
+//     }
+//   })
+//   observer.observe(target, {
+//     attributes: true,
+//     childList: true,
+//     characterData: true,
+//     subtree: true,
+//   })
+//   return observer
+// }
+// ------------------------
+// function observe (container) {
+//   var observer = new MutationObserver(mutations => {
+//     for (var i = 0; i < mutations.length; i++) {
+//       var m = mutations[i]
+//       // @TODO: container is relative and overflow hidden
+//       // => make sure children can not visually break out!
+//       console.log('OBSERVE', container.children[0])
+//       // @TODO: update height/width according to layout changes
+//
+//       // var obs = onresize(container, ({ width, height, w, h }) => {
+//       //   console.log('[size]', width, height)
+//       //   console.log('[offset]', w, h)
+//       //   /* @TODO:
+//       //
+//       //     1. we know things changed
+//       //     2. update `container` with appropriate height/width
+//       //     3. also trigger other "containers" to update their width
+//       //       * ,,,
+//       //
+//       //   */
+//       // })
+//       // // @TODO: (un)register `obs` on childList change
+//       // // @TODO: change size manually on `characterData`
+//     }
+//   })
+//   observer.observe(container, { childList: true, characterData: true })
+// }
+// const TABS = new Map()
 function template (mosaic, theme) {
-  // @TODO: re-write non-recursive!
   var opts = mosaic[0]
   var args = mosaic.slice(1)
   var cmd = opts.cmd
   if (cmd === 'tab') return tab(theme, opts, args)
   if (cmd === 'col' || cmd === 'row') return tile(theme, cmd, args)
-  return command(opts, args) // @TODO: use to programmatically control TWM
+  throw new Error('only `tab`, `col` or `row` are supported')
+
+  // return command(opts, args) // @TODO: use to programmatically control TWM
   // console.log(opts)
   // for (var i = 1, len = mosaic.length; i < len; i++) {
   //   var item = mosaic[i]
-  //
+  //   @TODO: re-write non-recursive!
   //   console.log(mosaic[i])
   // }
-  // console.log('----------')
-  // return bel`
-  //   <div class=${css.tilemosaic}>
-  //     ${'menu()'}
-  //     ${'elements.map(tab)'}
-  //   </div>`
 }
 function tile (theme, cmd, args) {
   const css = getTheme(theme)
-  return bel`
+  var el = bel`
     <div class="${css.tile} ${cmd === 'col' ? css.col : css.row}">
       ${args.map(item => template(item, theme))}
     </div>`
+  onload(el, load, unload)
+  return el
+  function load (target) {
+    var x = setInterval(() => {
+      if (isInDOM(target)) {
+        clearInterval(x)
+        adjustSizes(target, css, 'LOAD TILE')
+      }
+    }, 50)
+  }
+  function unload (target) {
+    var x = setInterval(() => {
+      if (isInDOM(target)) {
+        clearInterval(x)
+        adjustSizes(target, css, 'UNLOAD TILE')
+      }
+    }, 50)
+  }
+}
+
+// @TODO: resize-sensor for ROOT container to
+//        adjust on resize
+window.addEventListener('resize', event => {
+
+  console.log("RESIZE!!!")
+})
+
+function adjustSizes (target, css, from) {
+  console.log(from)
+  const parent = target.parentElement
+  const children = (!parent.classList.contains(css.tile) &&
+    !parent.classList.contains(css.row)  &&
+    !parent.classList.contains(css.col)  &&
+    !parent.classList.contains(css.tab)) ?
+      [] : [... target.parentElement.children]
+  if (parent.classList.contains(css.col)) {
+    var s = getComputedStyle(parent)
+    var p = +s.padding.split('px')[0]
+    var b = +s.border.split('px')[0]
+    var h = +s.height.split('px')[0] - 2 * (p+b)
+    const height = h / (children.length || 1)
+    children.forEach(el => {
+      var border = 0//30
+      var margin = 0//5
+      var color = `hsla(${360*Math.random()},100%,60%,1)`
+      el.style = `
+        border: ${border}px dashed ${color};
+        margin: ${margin}px;
+        // min-height: ${height - (2 * margin)}px;
+        // max-height: ${height - (2 * margin)}px;
+      `
+    })
+  }
+  else if (parent.classList.contains(css.row)) {
+    var s = getComputedStyle(parent)
+    var p = +s.padding.split('px')[0]
+    var b = +s.border.split('px')[0]
+    var w = +s.width.split('px')[0] - 2 * (p+b)
+    const width = w / (children.length || 1)
+    children.forEach(el => {
+      var border = 0//50
+      var margin = 0//10
+      var color = `hsla(${360*Math.random()},100%,60%,1)`
+      el.style = `
+        border: ${border}px dashed ${color};
+        margin: ${margin}px;
+        min-width: ${width - (2 * margin)}px;
+        max-width: ${width - (2 * margin)}px;
+      `
+    })
+  }
 }
 function tab (theme, { active = 1 }, args) {
   const css = getTheme(theme)
-  var element = args[active - 1].el
-  var names = args.map(item => item.name)
-  var container = bel`<div class=${css.container}>${element}</div>`
-  return bel`
+  const element = args[active - 1].el
+  const names = args.map(item => item.name).filter(x => x)
+  const bar = tabsbar(css, names, active - 1, args, el => {
+    container.innerHTML = ''
+    container.appendChild(el)
+  })
+  const container = !bar.children.length ?
+    bel`<div class=${css.maxcontainer}>${element}</div>`
+    : bel`<div class=${css.container}>${element}</div>`
+  var el = bel`
     <div class=${css.tab}>
-      ${menu(css, names, active - 1, args, container)}
+      ${bar}
       ${container}
     </div>`
+  onload(el, load, unload)
+  return el
+  function load (target) {
+    var x = setInterval(() => {
+      if (isInDOM(target)) {
+        clearInterval(x)
+        adjustSizes(target, css, 'LOAD TAB')
+      }
+    }, 50)
+  }
+  function unload (target) {
+    var x = setInterval(() => {
+      if (isInDOM(target)) {
+        clearInterval(x)
+        adjustSizes(target, css, 'UNLOAD TAB')
+      }
+    }, 50)
+  }
 }
-function menu (css, names, active, args, container) {
+function tabsbar (css, names, active, args, done) {
   var elements = names.map((name, i) => bel`
     <a class=${css.tabname} onclick=${e => onclick(i)}>${name}</a>
   `)
-  elements[active].classList.add(css.tabactive)
-  return bel`
-    <div class=${css.menu}>
-      ${elements}
-    </div>`
+  if (elements.length) {
+    elements[active].classList.add(css.tabactive)
+    var el = bel`<div class=${css.tabsbar}>${elements}</div>`
+  } else var el = bel`<div></div>`
+  return el
   function onclick (i) {
     elements[active].classList.remove(css.tabactive)
     active = i
     elements[active].classList.add(css.tabactive)
-    // debugger
-    container.innerHTML = ''
-    container.appendChild(args[i].el)
+    done(args[i].el)
   }
 }
 function command (opts, args) {
   console.log(opts, args)
   console.error('@TODO: implement custom commands')
+  throw new Error('@TODO: implement custom commands')
+}
+function isInDOM (el) {
+  if (!el) return
+  do {
+    var old = el
+  } while (el = el.parentElement)
+  if (old === document.documentElement) return true
 }
 function parse (strings, args) { // @TODO: make it work for real!
   var editor = args[0]
@@ -1223,75 +1535,92 @@ function parse (strings, args) { // @TODO: make it work for real!
   ]
 }
 const getTheme = (THEMES => (theme, key = JSON.stringify(theme)) =>{
+  // @TODO: maybe use "WeakMap" instead? ...and init on first use?
+  // @TODO: replace with component library
+  // @TODO: add hooks to listen for changes
+  // @TODO: make updatable (e.g. CSSOM)
+  // @TODO: use css variables maybe?
   return THEMES.get(key) || THEMES.set(key, style(theme)).get(key)
-}
-)(new Map([]))
-// @TODO: maybe use "WeakMap" instead? ...and init on first use?
+})(new Map([]))
 const style = ({
   font1 = 'Arial',
-  text = 'black',
-  activeText = 'white',
-  color1 = 'green',
-  color2 = 'grey',
-  color3 = 'grey',
-  color4 = 'red',
-  color5 = 'blue',
+  color_text = 'black',
+  color_activeText = 'white',
+  color_bgPanel = 'green',
+  color_bgTab = 'grey',
+  color_bgContent = 'grey',
+  color_background = 'red',
+  color_bgPane = 'blue',
 } = {}) => csjs`
 .tile {
   box-sizing: border-box;
   display: flex;
   position: relative;
   box-sizing: border-box;
+  height: 100%;
+  flex-grow: 1;
   overflow: auto;
 }
 .tab {
   box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
   font-family: ${font1};
-  padding: 5px;
-  color: ${text};
-  background-color: ${color1};
+  color: ${color_text};
+  background-color: ${color_bgPanel};
 }
-.menu {
+.tabsbar {
   box-sizing: border-box;
-  padding: 5px 5px 0px;
+  display: flex;
+  box-sizing: border-box;
+  padding-left: 35px;
   height: 23px;
 }
 .tabname {
   box-sizing: border-box;
   margin: 0px 3px;
   padding: 3px 3px 0px 3px;
-  border: 1px dotted white;
+  font-size: 14px;
+  border: 1px dashed white;
   font-weight: 600;
   cursor: pointer;
 
-  background-color: ${color2};
+  background-color: ${color_bgTab};
 }
 .tabactive {
   box-sizing: border-box;
-  border-bottom: 1px solid grey;
-  color: ${activeText};
+  border-bottom: 1px solid ${color_bgContent};
+  color: ${color_activeText};
 }
 .container {
   box-sizing: border-box;
   height: calc(100% - 23px);
 
-  background-color: ${color3};
+  // background-color: ${color_bgContent};
+
+  position: relative;
+  overflow: auto;
+}
+.maxcontainer {
+  box-sizing: border-box;
+  height: 100%;
+
+  // background-color: ${color_bgContent};
+
+  position: relative;
+  overflow: auto;
 }
 .col {
   box-sizing: border-box;
   flex-direction: column;
-  padding: 5px;
 
-  background-color: ${color4};
+  // padding: 20px;
+  // background-color: ${color_background};
 }
 .row {
   box-sizing: border-box;
   flex-direction: row;
-  padding: 5px;
 
-  background-color: ${color5};
+  // padding: 20px;
+  // background-color: ${color_bgPane};
 }`
 
-},{"bel":3,"csjs-inject":6}]},{},[1]);
+},{"bel":"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/node_modules/bel/browser.js","csjs-inject":"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/node_modules/csjs-inject/index.js","on-load":"/home/serapath/Desktop/dev/code/@ui-components/repo/twm/node_modules/on-load/index.js"}]},{},["/home/serapath/Desktop/dev/code/@ui-components/repo/twm/demo/demo.js"]);
